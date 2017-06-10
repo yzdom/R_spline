@@ -1,7 +1,9 @@
 
 #help codes from spline help
+require(graphics)
 
 set.seed(124)
+op <- par(mfrow = c(2,1), mgp = c(2,.8,0), mar = 0.1+c(3,3,3,1))
 n <- 9
 x <- 1:n
 y <- rnorm(n)
