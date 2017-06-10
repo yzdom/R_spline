@@ -1,3 +1,5 @@
+
+#help codes from spline help
 require(graphics)
 
 op <- par(mfrow = c(2,1), mgp = c(2,.8,0), mar = 0.1+c(3,3,3,1))
