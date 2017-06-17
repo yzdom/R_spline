@@ -15,9 +15,9 @@ spline0=function(x,y,pts,mtd){
     #make outputs,  leading y vectors, previous y vectors, derivative vectors
     n=length(x)
     nn=1+(n-1)*(pts+1)
-    xx=x
-    inc=(c(x[-1],x[n])-x)/(pts+1)
-    x+inc
+    #xx=seq(1,nn)
+    inc=(x[-1]-x[-n])/(pts+1)
+    inc_ext=c(0,rep(inc,each=pts+1))
     yy=rep(NA,nn)
     y_n1=c(y[-1],y[n])
     y_n2=c(y[-c(1,2)],y[c(n,n)])
@@ -33,16 +33,17 @@ spline0=function(x,y,pts,mtd){
     
     res=
       #list(x=xx,y=yy)
-      #data.frame(xx,yy)
-      data.frame(y,y_n1,y_n2,y_p1,y_d1,y_d2,mmp,y_d1)
+      data.frame(xx,inc_ext,yy)
+      #data.frame(x,inc,y,y_n1,y_n2,y_p1,y_d1,y_d2,mmp,y_d1)
   }
   
 }
 
 set.seed(123)
 a=rnorm(23,0,1)
-b=spline0(seq(1,23),inp,2)
 a
-View(b)
 plot(a)
 lines(seq(23),a)
+
+b=spline0(seq(1,23),a,2)
+View(b)
