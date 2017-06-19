@@ -12,13 +12,18 @@ spline0=function(x,y,pts,mtd){
      length(x) < 3){res='invalid inputs'}
   else{
     
-    #make outputs,  leading y vectors, previous y vectors, derivative vectors
     n=length(x)
     nn=1+(n-1)*(pts+1)
-    #xx=seq(1,nn)
+    
+    #make extended x vector
+    x_ext=rep(x[-n],each=pts+1)
     inc=(x[-1]-x[-n])/(pts+1)
-    inc_ext=c(0,rep(inc,each=pts+1))
+    inc_ext=rep(inc,each=pts+1)
+    xx=c(x_ext+seq(0,pts)*inc_ext,x[n])
+    
+    #extended y, leading y, previous y, derivative y vectors
     yy=rep(NA,nn)
+    yy[seq(1,nn,pts+1)]=y
     y_n1=c(y[-1],y[n])
     y_n2=c(y[-c(1,2)],y[c(n,n)])
     y_p1=c(c(y[1],y[-n]))
@@ -33,17 +38,17 @@ spline0=function(x,y,pts,mtd){
     
     res=
       #list(x=xx,y=yy)
-      data.frame(xx,inc_ext,yy)
+      data.frame(xx,yy)
       #data.frame(x,inc,y,y_n1,y_n2,y_p1,y_d1,y_d2,mmp,y_d1)
   }
   
 }
 
 set.seed(123)
-a=rnorm(23,0,1)
-a
-plot(a)
-lines(seq(23),a)
+x=cumsum(pmax(rnorm(23,1,1),1))
+y=rnorm(23,0,1)
 
-b=spline0(seq(1,23),a,2)
-View(b)
+plot(x,y)
+lines(x,y)
+
+View(spline0(x,y,2))
